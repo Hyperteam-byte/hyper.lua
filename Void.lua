@@ -12,7 +12,7 @@ end
 
 -- Arayüz (Menü) Oluşturma
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "TSB_Suiryu_TP"
+screenGui.Name = "Auto Void"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = playerGui
 
