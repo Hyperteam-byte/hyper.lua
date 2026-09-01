@@ -20,7 +20,7 @@ local mainTitle = Instance.new("TextLabel")
 mainTitle.Size = UDim2.new(0, 500, 0, 60) 
 mainTitle.Position = UDim2.new(0.5, -250, 0.4, -30) 
 mainTitle.BackgroundTransparency = 1 
-mainTitle.Text = "HyperTeam Presents"
+mainTitle.Text = "HyperTeam Presnt"
 mainTitle.TextColor3 = Color3.fromRGB(255, 255, 255) 
 mainTitle.TextSize = 50 
 mainTitle.Font = Enum.Font.LuckiestGuy 
@@ -67,7 +67,9 @@ gear.Text = "⚙️"
 gear.TextSize = 45 
 gear.Parent = canvas 
 
-local lines = {  
+local lines = { 
+    "Choking Merebennie...", 
+    "Stealing His Source...", 
     "Skidding Whilst Gooning...", 
     "Bypassing SanFuckingTino's Anti Cheat...", 
     "Tricking The Game...", 
@@ -111,14 +113,14 @@ SG:SetCore("SendNotification", {
     Title = "All Emotes Loaded", 
     Text = "Success! Everything is ready.", 
     Duration = 4, 
-    Button1 = "Made By HyperTeam" 
+    Button1 = "Im Gay" 
 }) 
 task.wait(2) 
 
 local callback = Instance.new("BindableFunction") 
 callback.OnInvoke = function(button) 
     if button == "ok" and setclipboard then 
-        setclipboard("https://discord.gg/EXV7eNVqZ") 
+        setclipboard("discord.gg/mYMFbv7rEg/") 
     end 
 end 
 
@@ -569,4 +571,345 @@ local function Var117(Var118)
             for _, Var123 in ipairs(Var120:GetChildren()) do 
                 local Var124 = Var123:Clone() 
                 if Var124:IsA("BasePart") or Var124:IsA("Model") then 
-                    Var124.Parent = Var1
+                    Var124.Parent = Var122 
+                    local Var125 = Var124:IsA("Model") and (Var124.PrimaryPart or Var124:FindFirstChildWhichIsA("BasePart")) or Var124 
+                    if Var125 then 
+                        local Var126 = Instance.new("Weld") 
+                        Var126.Part0 = Var121 
+                        Var126.Part1 = Var125 
+                        Var126.C0 = CFrame.new(0, 0, 0) 
+                        Var126.Parent = Var125 
+                        Var115(Var124) 
+                        for _, Var127 in ipairs(Var124:GetDescendants()) do 
+                            Var115(Var127) 
+                            if Var127:IsA("ParticleEmitter") then 
+                                Var127.Enabled = true 
+                                Var127:Emit(50) 
+                            end 
+                        end 
+                    end 
+                elseif Var124:IsA("ParticleEmitter") or Var124:IsA("Attachment") then 
+                    Var124.Parent = Var121 
+                    if Var124:IsA("ParticleEmitter") then 
+                        Var124.Enabled = true 
+                        Var124:Emit(50) 
+                    end 
+                end 
+            end 
+        end 
+    end 
+end 
+
+local function Var128(Var129) 
+    local Var130 = Var129:WaitForChild("Humanoid") 
+    Var130.AnimationPlayed:Connect(function(Var131) 
+        if tostring(Var131.Animation.AnimationId):find(Var113) then 
+            for Var132, Var133 in pairs(Var114) do 
+                task.delay(Var132, function() 
+                    local Var134 = Instance.new("Sound", workspace) 
+                    Var134.SoundId = Var133.SoundId 
+                    Var134.Volume = Var133.Volume 
+                    Var134.Looped = Var133.Looped or false 
+                    Var134:Play() 
+                    if not Var134.Looped then 
+                        game.Debris:AddItem(Var134, 8) 
+                    end 
+                end) 
+            end 
+            task.delay(0.1, function() 
+                local Var135 = Instance.new("Folder", Var129) 
+                Var135.Name = "PrideBind" 
+                Var135:SetAttribute("EmoteProperty", true) 
+                pcall(function() 
+                    require(Var112.Emotes.VFX):MainFunction({ 
+                        Character = Var129, 
+                        vfxName = "Boss Raid", 
+                        SpecificModule = Var112.Emotes.VFX, 
+                        AnimSent = tonumber(Var113), 
+                        RealBind = Var135 
+                    }) 
+                end) 
+            end) 
+            task.spawn(function() 
+                while Var131.IsPlaying do 
+                    if Var131.TimePosition >= Var131.Length - 0.1 then 
+                        Var131:AdjustSpeed(0) 
+                        Var131.TimePosition = Var131.Length - 0.01 
+                        break 
+                    end 
+                    task.wait() 
+                end 
+            end) 
+            local Var136 
+            Var136 = Var130.Running:Connect(function(Var137) 
+                if Var137 > 0.1 then 
+                    Var131:Stop(0.2) 
+                    Var117(Var129) 
+                    Var136:Disconnect() 
+                end 
+            end) 
+        end 
+    end) 
+end 
+
+if Var111.Character then Var128(Var111.Character) end 
+Var111.CharacterAdded:Connect(Var128) 
+
+--[Shadow Emerge] 
+local Var138 = game:GetService("Players").LocalPlayer 
+local Var139 = game:GetService("ReplicatedStorage") 
+local Var140 = "121032789756540" 
+local Var141 = Var139.Emotes.auraNew 
+
+local function Var142(Var143) 
+    for _, Var144 in pairs(Var141:GetChildren()) do 
+        local Var145 = Var143:FindFirstChild(Var144.Name) 
+        if Var145 and Var145:IsA("BasePart") then 
+            local Var146 = Instance.new("Folder") 
+            Var146.Name = "AuraEffect_" .. Var144.Name 
+            Var146.Parent = Var143 
+            for _, Var147 in pairs(Var144:GetChildren()) do 
+                local Var148 = Var147:Clone() 
+                if Var148:IsA("BasePart") or Var148:IsA("Model") then 
+                    Var148.Parent = Var146 
+                    local Var149 = Var148:IsA("Model") and (Var148.PrimaryPart or Var148:FindFirstChildWhichIsA("BasePart")) or Var148 
+                    if Var149 then 
+                        local Var150 = Instance.new("Weld") 
+                        Var150.Part0 = Var145 
+                        Var150.Part1 = Var149 
+                        Var150.C0 = CFrame.new(0, 0, 0) 
+                        Var150.Parent = Var149 
+                        local function Var151(Var152) 
+                            if Var152:IsA("BasePart") then 
+                                Var152.Anchored = false 
+                                Var152.CanCollide = false 
+                                Var152.Massless = true 
+                            elseif Var152:IsA("ParticleEmitter") then 
+                                Var152.Enabled = true 
+                            end 
+                        end 
+                        Var151(Var148) 
+                        for _, Var153 in ipairs(Var148:GetDescendants()) do Var151(Var153) end 
+                    end 
+                elseif Var148:IsA("ParticleEmitter") or Var148:IsA("Attachment") then 
+                    Var148.Parent = Var145 
+                    if Var148:IsA("ParticleEmitter") then 
+                        Var148.Enabled = true 
+                    end 
+                end 
+            end 
+        end 
+    end 
+end 
+
+local function Var154(Var155) 
+    local Var156 = Var155:WaitForChild("Humanoid") 
+    local Var157 = false 
+    Var156.AnimationPlayed:Connect(function(Var158) 
+        if tostring(Var158.Animation.AnimationId):find(Var140) and not Var157 then 
+            Var157 = true 
+            task.delay(3, function() 
+                if Var155 and Var156.Health > 0 then Var142(Var155) end 
+            end) 
+        end 
+    end) 
+end 
+
+if Var138.Character then Var154(Var138.Character) end 
+Var138.CharacterAdded:Connect(Var154) 
+
+--[Amplify] 
+local Var159 = game:GetService("Players") 
+local Var160 = Var159.LocalPlayer 
+local Var161 = game:GetService("ReplicatedStorage") 
+local Var162 = game:GetService("Workspace") 
+local Var163 = game:GetService("Debris") 
+local Var164 = "106778226674700" 
+local Var165 = false 
+local Var166 = 0 
+local Var167 = nil 
+local Var168 = { 
+    [2] = {{id = "13064223399", volume = 2}}, 
+    [3] = {{id = "13064223291", volume = 2}}, 
+    [4] = {{id = "13064223483", volume = 2}}, 
+    [5] = {{id = "13064223399", volume = 2}} 
+} 
+
+local function Var169(Var170, Var171) 
+    local Var172 = Instance.new("Sound") 
+    Var172.SoundId = "rbxassetid://" .. Var170 
+    Var172.Volume = Var171 
+    Var172.Parent = Var160:WaitForChild("PlayerGui") 
+    Var172:Play() 
+    Var163:AddItem(Var172, 2) 
+end 
+
+local function Var173(Var174) 
+    local Var175 = Var161.Resources.MeleeEffects.Amplify.Real:FindFirstChild("part") 
+    if not Var175 then return end 
+    local Var176 = Instance.new("Attachment", Var174) 
+    Var163:AddItem(Var176, 3) 
+    for _, Var177 in ipairs(Var175:GetChildren()) do 
+        if Var177:IsA("ParticleEmitter") or Var177:IsA("Attachment") then 
+            local Var178 = Var177:Clone() 
+            if Var178:IsA("Attachment") then 
+                Var178.Parent = Var174 
+                Var178.WorldCFrame = Var174.CFrame 
+                for _, Var179 in ipairs(Var178:GetDescendants()) do 
+                    if Var179:IsA("ParticleEmitter") then 
+                        Var179:Emit(Var179:GetAttribute("EmitCount") or 50) 
+                    end 
+                end 
+                Var163:AddItem(Var178, 3) 
+            else 
+                Var178.Parent = Var176 
+                Var178:Emit(Var178:GetAttribute("EmitCount") or 50) 
+            end 
+        elseif Var177:IsA("BasePart") or Var177:IsA("MeshPart") then 
+            if Var177.Transparency < 1 then 
+                local Var180 = Var177:Clone() 
+                Var180.Parent = Var162 
+                Var180.CFrame = Var174.CFrame 
+                Var180.Anchored = true 
+                Var180.CanCollide = false 
+                for _, Var181 in ipairs(Var180:GetDescendants()) do 
+                    if Var181:IsA("ParticleEmitter") then 
+                        Var181:Emit(Var181:GetAttribute("EmitCount") or 50) 
+                    end 
+                end 
+                Var163:AddItem(Var180, 1) 
+            end 
+        end 
+    end 
+end 
+
+local function Var182() 
+    Var165 = false 
+    if Var167 then Var167:Disconnect() Var167 = nil end 
+end 
+
+local function Var183(Var184) 
+    Var182() 
+    Var165 = true 
+    Var166 = tick() 
+    local Var185 = tick() 
+    Var167 = Var184:GetAttributeChangedSignal("LastM1Hitted"):Connect(function() 
+        if not Var165 then return end 
+        local Var186 = Var184:GetAttribute("LastM1Hitted") 
+        local Var187 = Var184:GetAttribute("Combo") 
+        if Var168[Var187] then 
+            for _, Var188 in ipairs(Var168[Var187]) do 
+                task.spawn(Var169, Var188.id, Var188.volume) 
+            end 
+        end 
+        local Var189 = Var186 and Var186:match("([^;]+)") 
+        local Var190 = Var162:FindFirstChild(Var189) or (Var162:FindFirstChild("Live") and Var162.Live:FindFirstChild(Var189)) 
+        if Var190 then 
+            local Var191 = Var190:FindFirstChild("HumanoidRootPart") or Var190:FindFirstChild("Torso") if Var191 then 
+                Var166 = tick() 
+                Var173(Var191) 
+            end 
+        end 
+    end) 
+    task.spawn(function() 
+        while Var165 do 
+            task.wait(1) 
+            if tick() - Var185 >= 35 or tick() - Var166 >= 20 then 
+                Var182() 
+                break 
+            end 
+        end 
+    end) 
+end 
+
+local function Var192(Var193, Var194) 
+    local Var195 = Var161.Emotes:FindFirstChild("AmplifyVfx") 
+    if not Var195 then return end 
+    local function Var196(Var197, Var198) 
+        local Var199 = Var195[Var197]:Clone() 
+        Var199.Parent = Var198 
+        local Var200 = Var199:FindFirstChildOfClass("Motor6D") 
+        if Var200 then 
+            Var199.Anchored = false 
+            Var200.Part0 = Var198 
+            Var200.Part1 = Var199 
+        end 
+        for _, Var201 in pairs(Var199:GetDescendants()) do 
+            if Var201:IsA("ParticleEmitter") then 
+                Var201:Emit(Var201:GetAttribute("EmitCount") or 10) 
+                if Var200 then Var201.Enabled = true end 
+            end 
+        end 
+        Var163:AddItem(Var199, 5) 
+    end 
+    Var194:GetMarkerReachedSignal("first"):Connect(function() 
+        Var196("arm", Var193["Right Arm"]) 
+        Var196("head", Var193.Head) 
+    end) 
+    Var194:GetMarkerReachedSignal("sec"):Connect(function() 
+        Var196("arm2", Var193["Left Arm"]) 
+        Var196("auraoff", Var193["Left Arm"]) 
+    end) 
+end 
+
+local function Var202(Var203) 
+    local Var204 = Var203:WaitForChild("Humanoid") 
+    Var204.AnimationPlayed:Connect(function(Var205) 
+        if tostring(Var205.Animation.AnimationId):find(Var164) then 
+            local Var206 = Instance.new("Sound", Var203.PrimaryPart) 
+            Var206.SoundId = "rbxassetid://112089323132965" 
+            Var206.Volume = 2 
+            Var206:Play() 
+            Var163:AddItem(Var206, 5) 
+            Var192(Var203, Var205) 
+            Var183(Var203) 
+        end 
+    end) 
+end 
+
+if Var160.Character then Var202(Var160.Character) end 
+Var160.CharacterAdded:Connect(Var202) 
+
+--[My brother] 
+local Var207 = game:GetService("Players").LocalPlayer 
+local Var208 = game:GetService("ReplicatedStorage") 
+local Var209 = Var208:WaitForChild("Replication") 
+local Var210 = "123464270068243" 
+
+local function Var211() 
+    local Var212, Var213 = pcall(function() return Var207:GetFriendsAsync(Var207.UserId) end) 
+    if Var212 then 
+        local Var214 = Var213:GetCurrentPage() 
+        if #Var214 > 0 then 
+            return Var214[math.random(1, #Var214)].Id 
+        end 
+    end 
+    return 261 
+end 
+
+local function Var215(Var216) 
+    local Var217 = Var216:WaitForChild("Humanoid") 
+    Var217.AnimationPlayed:Connect(function(Var218) 
+        if tostring(Var218.Animation.AnimationId):find(Var210) then 
+            local Var219 = Var211() 
+            task.delay(2.4, function() 
+                if getconnections then 
+                    for _, Var220 in pairs(getconnections(Var209.OnClientEvent)) do 
+                        if Var220.Function then 
+                            pcall(function() 
+                                Var220.Function({ 
+                                    Effect = "Best Brother", 
+                                    char = Var216, 
+                                    Id = Var219 
+                                }) 
+                            end) 
+                        end 
+                    end 
+                end 
+            end) 
+        end 
+    end) 
+end 
+
+if Var207.Character then Var215(Var207.Character) end 
+Var207.CharacterAdded:Connect(Var215)
