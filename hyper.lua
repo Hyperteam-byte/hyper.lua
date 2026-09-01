@@ -1,4 +1,4 @@
-hlocal HttpService = game:GetService("HttpService")
+local HttpService = game:GetService("HttpService")
 local AnalyticsService = game:GetService("RbxAnalyticsService")
 local httpRequest = http_request or request or (syn and syn.request)
 
