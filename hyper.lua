@@ -64,7 +64,7 @@ if getgenv().RevenantLoaded then
     getgenv().RevenantLoaded = false
     pcall(function()
         game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = bypassText("ZKAYTSB"),
+            Title = bypassText("HyperTeam"),
             Text  = "Re-executing...",
             Duration  = 1,
         })
@@ -9610,7 +9610,7 @@ if isGamepassesGame and Tabs.Misc then
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TeleportService   = game:GetService("TeleportService")
     local function doLeave()
-        pcall(function() game:GetService("Players").LocalPlayer:Kick("\n[ZKAYTSB]\nAnticheat Triggered, You were reported for exploiting.") end)
+        pcall(function() game:GetService("Players").LocalPlayer:Kick("\n[HyperTeam]\nAnticheat Triggered, You were reported for exploiting.") end)
     end
 end
 local _revenantServerType = "Unknown"
@@ -9836,6 +9836,18 @@ if isGamepassesGame and Tabs.Misc then
         end
     })
     end
+    BoxScripts:AddButton({
+    Text = "Auto Void",
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Hyperteam-byte/hyper.lua/refs/heads/main/Void.lua"))()
+    end
+})
+BoxScripts:AddButton({
+    Text = "All Emotes",
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Hyperteam-byte/hyper.lua/refs/heads/main/All%20emotes"))()
+    end
+})
     BoxScripts:AddDivider()
     BoxScripts:AddButton({ Text = "Kade Gojo V1", Func = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/miikicomsono/BaldyToSorcererFixed/refs/heads/main/V1.lua"))()
@@ -14157,7 +14169,7 @@ task.spawn(function()
         pcall(function() Toggles.KeybindMenuOpen:SetValue(true) end)
         task.wait(8)
         Library:Notify({
-            Title   = "ZKAYTSB",
+            Title   = "HyperTeam",
             Content = "Mobile device detected. To hide on-screen keybinds, navigate to Settings and disable \"Show Keybinds\".",
             Time = 12,
         })
@@ -15409,8 +15421,8 @@ SaveManager:SetLibrary(Library)
 local nick = lp.DisplayName ~= "" and lp.DisplayName or lp.Name
 SaveManager:IgnoreThemeSettings()
 
-ThemeManager:SetFolder("ZKAYTSB")
-SaveManager:SetFolder("ZKAYTSB/TSB/configs")
+ThemeManager:SetFolder("HyperTeam")
+SaveManager:SetFolder("HyperTeam/TSB/configs")
 SaveManager:BuildConfigSection(Tabs.Settings)
 
 ThemeManager:ApplyToTab(Tabs.Settings)
@@ -16080,7 +16092,7 @@ end, tostring)
 
 if not _mainOk then
     warn("[Something is wrong with Revenant]: " .. tostring(_mainErr))
-    print("[ZKAYTSB ERROR DETAIL]: " .. tostring(_mainErr))
+    print("[HyperTeam ERROR DETAIL]: " .. tostring(_mainErr))
     pcall(function()
         local _bugBtn = Instance.new("BindableFunction")
         _bugBtn.Parent = game:GetService("CoreGui")
