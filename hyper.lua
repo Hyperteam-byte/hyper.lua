@@ -1,3 +1,156 @@
+-- ==========================================
+-- 1. BÖLÜM: HYPERTEAM SECURE KEY SYSTEM
+-- ==========================================
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/jensonhirst/Orion/main/source'))()
+
+local KeyWindow = OrionLib:MakeWindow({
+    Name = "HyperTeam Hub | Key System", 
+    HidePremium = false, 
+    SaveConfig = false, 
+    ConfigFolder = "HyperTeamConfig",
+    IntroEnabled = true,
+    IntroText = "HyperTeam Loading..."
+})
+
+local LootLabsLink = "https://lootdest.org/s?35qZ3Pet"
+local DiscordLink  = "https://discord.gg/yourdiscord"
+local RawKeyURL    = "https://raw.githubusercontent.com/Hyperteam-byte/hyper.lua/refs/heads/main/HyperTeam-Key.txt"
+
+local EnteredKey = ""
+local KeyVerified = false
+
+local function GetHWID()
+    return game:GetService("RbxAnalyticsService"):GetClientId()
+end
+
+local function VerifyKey(inputKey)
+    if inputKey == "" or not inputKey:find("HyperTeam%-") then 
+        return false, "Geçersiz format! Key 'HyperTeam-' ile başlamalıdır." 
+    end
+
+    local currentHWID = GetHWID()
+    local currentTime = os.time()
+    local dayInSeconds = 86400
+
+    local success, content = pcall(function()
+        return game:HttpGet(RawKeyURL .. "?v=" .. math.random(1, 100000))
+    end)
+
+    if not success or not content then
+        return false, "Sunucu bağlantısı başarısız!"
+    end
+
+    local keyExists = false
+    for line in content:gmatch("[^\r\n]+") do
+        local cleanLine = line:match("^%s*(.-)%s*$")
+        if cleanLine == inputKey then
+            keyExists = true
+            break
+        end
+    end
+
+    if not keyExists then
+        return false, "Key sistemde bulunamadı veya geçersiz!"
+    end
+
+    local saveFileName = "HyperTeam_Data_" .. inputKey .. ".txt"
+
+    if isfile and isfile(saveFileName) then
+        local savedContent = readfile(saveFileName)
+        local savedHWID, firstUsedTime = savedContent:match("([^|]+)|([^|]+)")
+        
+        firstUsedTime = tonumber(firstUsedTime) or 0
+
+        if savedHWID ~= currentHWID then
+            return false, "HWID Hatalı! Bu key başka cihazda aktifleştirilmiş."
+        end
+
+        if (currentTime - firstUsedTime) > dayInSeconds then
+            return false, "Bu key'in 24 saatlik süresi doldu! Yeni key almalısın."
+        end
+    else
+        if writefile then
+            writefile(saveFileName, currentHWID .. "|" .. tostring(currentTime))
+        end
+    end
+
+    return true, "Key doğrulandı! Erişim sağlandı."
+end
+
+local KeyTab = KeyWindow:MakeTab({
+    Name = "🔑 Key Authorization",
+    Icon = "rbxassetid://4483362458",
+    PremiumOnly = false
+})
+
+KeyTab:AddSection({
+    Name = "--- Access Panel ---"
+})
+
+KeyTab:AddTextbox({
+    Name = "Enter Key",
+    Default = "HyperTeam-",
+    TextDisappear = false,
+    Callback = function(Value)
+        EnteredKey = Value
+    end	
+})
+
+KeyTab:AddButton({
+    Name = "🔑 Get Key (Lootlabs)",
+    Callback = function()
+        setclipboard(LootLabsLink)
+        OrionLib:MakeNotification({
+            Name = "Link Kopyalandı!",
+            Content = "Lootlabs linki kopyalandı.",
+            Image = "rbxassetid://4483362458",
+            Time = 4
+        })
+    end
+})
+
+KeyTab:AddButton({
+    Name = "✅ Verify Key",
+    Callback = function()
+        local isValid, msg = VerifyKey(EnteredKey)
+        if isValid then
+            OrionLib:MakeNotification({
+                Name = "Başarılı!",
+                Content = msg,
+                Image = "rbxassetid://4483362458",
+                Time = 3
+            })
+            
+            task.wait(1)
+            KeyVerified = true
+            OrionLib:Destroy()
+        else
+            OrionLib:MakeNotification({
+                Name = "Erişim Engellendi!",
+                Content = msg,
+                Image = "rbxassetid://4483362458",
+                Time = 5
+            })
+        end
+    end
+})
+
+KeyTab:AddButton({
+    Name = "💬 Discord Community",
+    Callback = function()
+        setclipboard(DiscordLink)
+        OrionLib:MakeNotification({
+            Name = "Discord Kopyalandı!",
+            Content = "Discord davet bağlantısı kopyalandı.",
+            Image = "rbxassetid://4483362458",
+            Time = 4
+        })
+    end
+})
+
+OrionLib:Init()
+
+repeat task.wait(0.1) until KeyVerified == true
 local HttpService = game:GetService("HttpService")
 local AnalyticsService = game:GetService("RbxAnalyticsService")
 local httpRequest = http_request or request or (syn and syn.request)
