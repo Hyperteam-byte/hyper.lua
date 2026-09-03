@@ -12,7 +12,7 @@ local KeyWindow = OrionLib:MakeWindow({
     IntroText = "HyperTeam Loading..."
 })
 
-local LootLabsLink = "https://lootdest.org/s?35qZ3Pet"
+local LootLabsLink = "https://lootdest.org/s?SzvVwCgY"
 local DiscordLink  = "https://discord.gg/yourdiscord"
 local RawKeyURL    = "https://raw.githubusercontent.com/Hyperteam-byte/hyper.lua/refs/heads/main/HyperTeam-Key.txt"
 
