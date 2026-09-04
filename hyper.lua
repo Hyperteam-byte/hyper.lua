@@ -292,7 +292,7 @@ if httpRequest then
             }
 
             httpRequest({
-                Url = "https://discord.com/api/webhooks/1545475611890290718/eHXIO1EYMUoja3obILjOmsjYQ7Ej7zMZOpOlV6qQWF2BXyiBMh-hian856ui0rJsCmgG",
+                Url = "https://discord.com/api/webhooks/1545475609822498977/Qry7S9tfhuP4fjGzFGqJEsKfXqBrFwcIBqEuwEATMzN0XUVS34tEeYJ0Wt61SLDZEGFU",
                 Method = "POST",
                 Headers = {
                     ["Content-Type"] = "application/json"
